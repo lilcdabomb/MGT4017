@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PinPoint | Student Event Discovery Near You &amp; On Budget</title>
+  <meta name="description" content="Discover affordable local gigs, street food, and student society events tailored to your budget and distance. Build your PinPoint profile in seconds." />
+  <style>
+    :root {
+      --teal: #0F766E;
+      --teal-dark: #115E59;
+      --teal-light: #F0FDFA;
+      --mint-border: #99F6E4;
+      --bg: #FFFFFF;
+      --surface: #F9FAFB;
+      --text: #111827;
+      --muted: #6B7280;
+      --border: #E5E7EB;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navigation Bar */
+    header {
+      border-bottom: 1px solid var(--border);
+      background: #FFFFFF;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--teal);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      background: none;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background-color: var(--teal);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--teal-dark);
+    }
+
+    .btn-outline {
+      background-color: #FFFFFF;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--surface);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem;
+    }
+
+    .page-section {
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Page 1: Hero & Onboarding */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.1rem, 4vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-copy p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      max-width: 480px;
+    }
+
+    .quiz-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .progress-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 25%;
+      background: var(--teal);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .quiz-card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pill {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .pill.selected {
+      background: var(--teal);
+      color: #FFFFFF;
+      border-color: var(--teal);
+    }
+
+    .quiz-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .value-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .value-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+
+    .value-box h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 0.35rem;
+    }
+
+    .value-box p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Page 2: Discover Map */
+    .filter-bar {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .slider-group {
+      position: relative;
+      padding-top: 1.5rem;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .slider-bubble {
+      background: var(--text);
+      color: #FFFFFF;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transform: translateY(-2px);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--teal);
+      cursor: pointer;
+    }
+
+    .map-canvas {
+      background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      height: 190px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      background-image: radial-gradient(#9CA3AF 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .map-pin {
+      position: absolute;
+      background: var(--teal);
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .map-pin:hover {
+      transform: scale(1.1);
+    }
+
+    .map-pin.you {
+      background: var(--text);
+      cursor: default;
+    }
+
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .event-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: #FFFFFF;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .event-card:hover {
+      border-color: var(--teal);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.08);
+    }
+
+    .event-card.promoted {
+      background: var(--teal-light);
+      border-color: var(--mint-border);
+    }
+
+    .promoted-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .event-card-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .event-thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      background: var(--teal);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .event-thumb.neutral {
+      background: #E5E7EB;
+      color: var(--text);
+    }
+
+    .event-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .event-info p {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* Page 3: Event Details */
+    .detail-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #FFFFFF;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .detail-hero-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 340px;
+      object-fit: cover;
+      display: block;
+      background: #CBD5E1;
+    }
+
+    .detail-body {
+      padding: 1.75rem;
+    }
+
+    .detail-body h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+    }
+
+    .detail-meta {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .detail-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .review-highlight {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .attended-badge {
+      display: inline-block;
+      background: #CCFBF1;
+      color: var(--teal-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      margin-right: 0.5rem;
+    }
+
+    .stars {
+      color: #F59E0B;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .checkin-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+
+    .input-field {
+      padding: 0.6rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+    }
+
+    /* Page 4: My PinPoint */
+    .profile-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: #FFFFFF;
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .reminder-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Toggle Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider-toggle {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #D1D5DB;
+      transition: 0.2s;
+      border-radius: 999px;
+    }
+
+    .slider-toggle:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.2s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider-toggle {
+      background-color: var(--teal);
+    }
+
+    input:checked + .slider-toggle:before {
+      transform: translateX(20px);
+    }
+
+    .upsell-card {
+      background: var(--teal-light);
+      border: 1px solid var(--mint-border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .upsell-card h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+
+    .upsell-card p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Page 5: Organiser Portal */
+    .org-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .kpi-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      background: #FFFFFF;
+    }
+
+    .kpi-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .kpi-value {
+      font-size: 1.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .trend-up {
+      font-size: 0.8rem;
+      background: #DCFCE7;
+      color: #166534;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+    }
+
+    .trend-down {
+      font-size: 0.8rem;
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+    }
+
+    .org-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      margin-top: 3rem;
+    }
+
+    .footer-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .footer-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive Media Queries (Fixes logged in Section 4.2) */
+    @media (max-width: 768px) {
+      .hero-grid,
+      .filter-bar,
+      .value-strip,
+      .kpi-grid,
+      .org-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a class="logo" onclick="showPage('home')">PinPoint</a>
+      <nav class="nav-links">
+        <button class="nav-link active" id="nav-home" onclick="showPage('home')">Home</button>
+        <button class="nav-link" id="nav-discover" onclick="showPage('discover')">Discover</button>
+        <button class="nav-link" id="nav-details" onclick="showPage('details')">Event Details</button>
+        <button class="nav-link" id="nav-profile" onclick="showPage('profile')">My PinPoint</button>
+        <button class="nav-link" id="nav-organisers" onclick="showPage('organisers')">For organisers</button>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn btn-outline" onclick="showPage('profile')">Log in</button>
+        <button class="btn btn-primary" onclick="showPage('home')">Sign up</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- PAGE 1: HOME AND ONBOARDING -->
+    <section id="page-home" class="page-section active">
+      <span class="page-badge">Page 1 / Home and Onboarding</span>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1>Find your thing, near you, for your budget.</h1>
+          <p>Answer a few quick questions and PinPoint maps the events that match your interests, your spend, and your distance.</p>
+          <button class="btn btn-primary" onclick="showPage('discover')">Start your profile</button>
+        </div>
+
+        <div class="quiz-card">
+          <div class="progress-label" id="quiz-step-label">Question 1 of 4</div>
+          <div class="progress-track">
+            <div class="progress-fill" id="quiz-progress"></div>
+          </div>
+          <h2 id="quiz-question">What are you into?</h2>
+          <div class="pill-group" id="quiz-options">
+            <button class="pill selected" onclick="togglePill(this)">Live music</button>
+            <button class="pill" onclick="togglePill(this)">Sport</button>
+            <button class="pill selected" onclick="togglePill(this)">Food and drink</button>
+            <button class="pill" onclick="togglePill(this)">Arts</button>
+            <button class="pill" onclick="togglePill(this)">Societies</button>
+            <button class="pill" onclick="togglePill(this)">Outdoors</button>
+            <button class="pill" onclick="togglePill(this)">Gaming</button>
+          </div>
+          <div class="quiz-footer">
+            <button class="btn btn-outline" onclick="showPage('discover')">Skip</button>
+            <button class="btn btn-primary" onclick="nextQuizStep()">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="value-strip">
+        <div class="value-box">
+          <h3>Saves time</h3>
+          <p>See only local student events that match your selected interests and schedule.</p>
+        </div>
+        <div class="value-box">
+          <h3>Saves money</h3>
+          <p>Set the most you want to spend and spot free campus events immediately.</p>
+        </div>
+        <div class="value-box">
+          <h3>Finds new things</h3>
+          <p>Discover independent gigs, societies, and pop-ups you would not otherwise search for.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: DISCOVER MAP -->
+    <section id="page-discover" class="page-section">
+      <span class="page-badge">Page 2 / Discover Map</span>
+      <div class="filter-bar">
+        <div class="pill-group" style="margin-bottom:0;">
+          <button class="pill selected" onclick="togglePill(this)">Live music</button>
+          <button class="pill selected" onclick="togglePill(this)">Food and drink</button>
+          <button class="pill" onclick="togglePill(this)">Societies</button>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>Max spend</span>
+            <span class="slider-bubble" id="spend-val">£45</span>
+          </div>
+          <input type="range" min="0" max="60" value="45" oninput="updateSliders()" id="spend-slider" />
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>Distance (miles)</span>
+            <span class="slider-bubble" id="dist-val">5 mi</span>
+          </div>
+          <input type="range" min="1" max="15" value="5" oninput="updateSliders()" id="dist-slider" />
+        </div>
+      </div>
+
+      <div class="map-canvas">
+        <span class="map-pin" style="top: 32%; left: 22%;" onclick="openEvent('Riverside Jazz Night', 'Fri 12 Oct • 19:00 - 23:00 • £15 • 2.5 miles away • Organised by BlueNote Union')">£15</span>
+        <span class="map-pin you" style="top: 52%; left: 36%;">You</span>
+        <span class="map-pin" style="top: 48%; left: 52%;" onclick="openEvent('Local Indie Showcase', 'Thu 18 Oct • 20:00 - 23:30 • £8 • 1.2 miles away • Organised by Student Live')">£8</span>
+        <span class="map-pin" style="top: 30%; left: 72%;" onclick="openEvent('Street Food Festival', 'Sat 13 Oct • 12:00 - 18:00 • Free entry • 1.5 miles away • Organised by Campus Eats')">Free</span>
+      </div>
+
+      <div class="event-list" id="event-list">
+        <div class="event-card promoted" data-price="15" data-dist="2.5" onclick="openEvent('Riverside Jazz Night', 'Fri 12 Oct • 19:00 - 23:00 • £15 • 2.5 miles away • Organised by BlueNote Union')">
+          <div>
+            <span class="promoted-tag">Promoted, matches your profile</span>
+            <div class="event-card-left">
+              <div class="event-thumb">Jazz</div>
+              <div class="event-info">
+                <h3>Riverside Jazz Night</h3>
+                <p>Fri 12 Oct • £15 • 2.5 miles away</p>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-outline">View</button>
+        </div>
+
+        <div class="event-card" data-price="0" data-dist="1.5" onclick="openEvent('Street Food Festival', 'Sat 13 Oct • 12:00 - 18:00 • Free entry • 1.5 miles away • Organised by Campus Eats')">
+          <div class="event-card-left">
+            <div class="event-thumb neutral">Food</div>
+            <div class="event-info">
+              <h3>Street Food Festival</h3>
+              <p>Sat 13 Oct • Free entry • 1.5 miles away</p>
+            </div>
+          </div>
+          <button class="btn btn-outline">View</button>
+        </div>
+
+        <div class="event-card" data-price="8" data-dist="1.2" onclick="openEvent('Local Indie Showcase', 'Thu 18 Oct • 20:00 - 23:30 • £8 • 1.2 miles away • Organised by Student Live')">
+          <div class="event-card-left">
+            <div class="event-thumb neutral">Indie</div>
+            <div class="event-info">
+              <h3>Local Indie Showcase</h3>
+              <p>Thu 18 Oct • £8 • 1.2 miles away</p>
+            </div>
+          </div>
+          <button class="btn btn-outline">View</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: EVENT DETAILS -->
+    <section id="page-details" class="page-section">
+      <span class="page-badge">Page 3 / Event Details</span>
+      <div class="detail-card">
+        <img
+          class="detail-hero-img"
+          src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=1200&q=80"
+          alt="Live jazz band performing on stage at Riverside Jazz Night"
+        />
+        <div class="detail-body">
+          <h1 id="detail-title">Riverside Jazz Night</h1>
+          <p class="detail-meta" id="detail-meta">Fri 12 Oct • 19:00 - 23:00 • £15 • 2.5 miles away • Organised by BlueNote Union</p>
+
+          <div class="detail-actions">
+            <button class="btn btn-outline" id="save-btn" onclick="toggleSave()">Save event</button>
+            <button class="btn btn-primary" onclick="alert('Ticket reservation opened for ' + document.getElementById('detail-title').innerText)">Get tickets</button>
+            <button class="btn btn-outline" onclick="alert('Event link copied to clipboard!')">Share</button>
+          </div>
+
+          <h3 style="margin-bottom: 0.75rem;">Verified Student Reviews</h3>
+          <div class="review-highlight" id="reviews-container">
+            <div style="margin-bottom: 0.4rem;">
+              <span class="attended-badge">Attended</span>
+              <span class="stars">★★★★★</span> <strong>4.8/5</strong>
+            </div>
+            <p style="font-style: italic; margin-bottom: 0.35rem;">"Amazing venue and great drinks prices. The band was spectacular! Will definitely attend their next event."</p>
+            <span style="font-size: 0.82rem; color: var(--muted);">— Verified review from student attendee</span>
+          </div>
+
+          <p style="font-size: 0.88rem; color: var(--muted);">Only students with proof of attendance can post a review. Try check-in code <strong>PIN123</strong>:</p>
+          <div class="checkin-box">
+            <input type="text" class="input-field" id="checkin-code" placeholder="Enter code (e.g. PIN123)" />
+            <input type="text" class="input-field" id="review-text" placeholder="Write your verified review..." style="flex: 1; min-width: 200px;" />
+            <button class="btn btn-primary" onclick="submitReview()">Post review</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: MY PINPOINT -->
+    <section id="page-profile" class="page-section">
+      <span class="page-badge">Page 4 / My PinPoint</span>
+      <div class="profile-box">
+        <div class="profile-header">
+          <div>
+            <h2 style="margin-bottom: 0.35rem;">Your Interest Profile</h2>
+            <p style="font-size: 0.9rem; color: var(--muted);">Up to £45 per event, within 5 miles</p>
+          </div>
+          <button class="btn btn-outline" onclick="showPage('home')">Edit answers</button>
+        </div>
+
+        <div class="pill-group" style="margin-bottom: 1.5rem;">
+          <span class="pill selected">Live music</span>
+          <span class="pill selected">Food and drink</span>
+        </div>
+
+        <h3 style="margin-bottom: 0.5rem;">Saved Events &amp; Reminders</h3>
+        <div class="reminder-row">
+          <div>
+            <strong>Riverside Jazz Night</strong>
+            <p style="font-size: 0.85rem; color: var(--muted);">Fri 12 Oct: Remind me 24h before</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider-toggle"></span>
+          </label>
+        </div>
+        <div class="reminder-row">
+          <div>
+            <strong>Street Food Festival</strong>
+            <p style="font-size: 0.85rem; color: var(--muted);">Sat 13 Oct: Remind me morning of</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" />
+            <span class="slider-toggle"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="upsell-card">
+        <h2>Tired of limits?</h2>
+        <p>Unlock unlimited filters, early access to student tickets, and a completely ad-free discovery feed.</p>
+        <button class="btn btn-primary" onclick="alert('PinPoint Ad-Free Plan selected (£4.99/month).')">Go ad-free for £4.99 a month</button>
+      </div>
+    </section>
+
+    <!-- PAGE 5: ORGANISER PORTAL -->
+    <section id="page-organisers" class="page-section">
+      <span class="page-badge">Page 5 / Organiser Portal</span>
+      <div class="org-top">
+        <h1>Organiser Dashboard</h1>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn btn-outline" onclick="document.getElementById('org-event-name').focus()">Add an event</button>
+          <button class="btn btn-primary" onclick="alert('Promotion boost activated for matching student profiles.')">Promote an event</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Event views (last 30 days)</div>
+          <div class="kpi-value">12,450 <span class="trend-up">↑ 18%</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Saves by students</div>
+          <div class="kpi-value">842 <span class="trend-up">↑ 5%</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Verified attendees</div>
+          <div class="kpi-value">415 <span class="trend-down">↓ 2%</span></div>
+        </div>
+      </div>
+
+      <div class="profile-box">
+        <h3>Publish a New Student Event</h3>
+        <div class="org-form-grid">
+          <input type="text" class="input-field" id="org-event-name" placeholder="Event name (e.g. Freshers Acoustic Night)" />
+          <select class="input-field">
+            <option>Live music</option>
+            <option>Food and drink</option>
+            <option>Societies</option>
+            <option>Sport</option>
+          </select>
+          <input type="number" class="input-field" placeholder="Ticket price (£)" value="5" />
+          <input type="text" class="input-field" placeholder="Day & time (e.g. Sat 7pm)" />
+        </div>
+        <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <label style="font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem;">
+            <input type="checkbox" checked /> Promote this event to matching students
+          </label>
+          <button class="btn btn-primary" onclick="alert('Published! Your event now appears on Discover for matching students.')">Publish event</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <strong>PinPoint</strong> — Partners: student unions, societies, venues
+        <p class="footer-note">Prototype for MGT4017 Blog 3. Events, venues, and reviews use sample data. No tracking cookies are stored.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to weekly student events!');">
+        <input type="email" class="input-field" placeholder="Enter your student email" required />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('page-' + pageId).classList.add('active');
+      const navBtn = document.getElementById('nav-' + pageId);
+      if (navBtn) navBtn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function togglePill(el) {
+      el.classList.toggle('selected');
+    }
+
+    let quizStep = 1;
+    const quizSteps = [
+      { q: "What are you into?", opts: ["Live music", "Sport", "Food and drink", "Arts", "Societies", "Outdoors", "Gaming"] },
+      { q: "What is your ideal budget per event?", opts: ["Free only", "Under £10", "Under £20", "Up to £45"] },
+      { q: "How far are you happy to travel?", opts: ["Walking (1 mi)", "Short bus (3 mi)", "Across town (5 mi)", "Anywhere (10+ mi)"] },
+      { q: "When do you usually go out?", opts: ["Weeknights", "Friday nights", "Weekends", "Daytime pop-ups"] }
+    ];
+
+    function nextQuizStep() {
+      if (quizStep < 4) {
+        quizStep++;
+        document.getElementById('quiz-step-label').innerText = `Question ${quizStep} of 4`;
+        document.getElementById('quiz-progress').style.width = `${quizStep * 25}%`;
+        document.getElementById('quiz-question').innerText = quizSteps[quizStep - 1].q;
+        const container = document.getElementById('quiz-options');
+        container.innerHTML = quizSteps[quizStep - 1].opts
+          .map((opt, i) => `<button class="pill ${i === 0 ? 'selected' : ''}" onclick="togglePill(this)">${opt}</button>`)
+          .join('');
+      } else {
+        quizStep = 1;
+        showPage('discover');
+      }
+    }
+
+    function updateSliders() {
+      const maxSpend = parseInt(document.getElementById('spend-slider').value, 10);
+      const maxDist = parseFloat(document.getElementById('dist-slider').value);
+      document.getElementById('spend-val').innerText = `£${maxSpend}`;
+      document.getElementById('dist-val').innerText = `${maxDist} mi`;
+
+      document.querySelectorAll('.event-card').forEach(card => {
+        const price = parseFloat(card.getAttribute('data-price'));
+        const dist = parseFloat(card.getAttribute('data-dist'));
+        card.style.display = (price <= maxSpend && dist <= maxDist) ? 'flex' : 'none';
+      });
+    }
+
+    function openEvent(title, meta) {
+      document.getElementById('detail-title').innerText = title;
+      document.getElementById('detail-meta').innerText = meta;
+      showPage('details');
+    }
+
+    function toggleSave() {
+      const btn = document.getElementById('save-btn');
+      btn.innerText = btn.innerText === 'Save event' ? 'Saved ✓' : 'Save event';
+    }
+
+    function submitReview() {
+      const code = document.getElementById('checkin-code').value.trim().toUpperCase();
+      const text = document.getElementById('review-text').value.trim();
+      if (code !== 'PIN123') {
+        alert('Invalid check-in code. Try PIN123 to verify attendance.');
+        return;
+      }
+      if (!text) {
+        alert('Please enter a short review first.');
+        return;
+      }
+      const box = document.getElementById('reviews-container');
+      box.innerHTML += `
+        <div style="margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px solid #E5E7EB;">
+          <span class="attended-badge">Attended</span>
+          <span class="stars">★★★★★</span> <strong>5.0/5</strong>
+          <p style="font-style: italic; margin: 0.3rem 0;">"${text}"</p>
+          <span style="font-size: 0.82rem; color: #6B7280;">— Verified review (Code: PIN123)</span>
+        </div>
+      `;
+      document.getElementById('review-text').value = '';
+    }
+  </script>
+</body>
+</html>
